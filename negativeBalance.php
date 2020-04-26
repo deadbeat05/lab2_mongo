@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Message</title>
+		<title>Traffic</title>
 	</head>
 	<body>
 		<?php
@@ -8,16 +8,16 @@
 				$dbport = '27017';
 				$dbname = 'lab2_Itech';
 				$c_users = 'lab2_Itech.user';
-			
+
 				$conn = new MongoDB\Driver\Manager("mongodb://$dbhost:$dbport");
 
-				$filter = ['login' => $_GET['userName']];
-				$option = [];
-				$read = new MongoDB\Driver\Query($filter, $option);
+				$read = new MongoDB\Driver\Query([], []);
 				$users = $conn->executeQuery($c_users , $read);
 				
-				foreach($users as $user){
-					echo $user->message;
+				foreach ($users as $user) {
+					if($user->balance<0){
+						echo "Name: $user->login <br> Balance: $user->balance";
+					}
 				}
 			?>
 	</body>
